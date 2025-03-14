@@ -1,0 +1,164 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: white;
+  padding: 20px;
+}
+
+.calculator {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.input-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+}
+
+/* Estilos para los botones */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; /* Espaciado entre botones */
+  margin-top: 10px; /* Espacio respecto a los inputs */
+}
+
+.button-group button {
+  flex: 1; /* Ambos botones ocuparán el mismo espacio */
+  padding: 0.75rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+/* Estilo del botón Calcular */
+#calculate {
+  background: #4CAF50; /* Verde */
+  color: white;
+}
+
+#calculate:hover {
+  background: #45a049;
+}
+
+/* Estilo del botón Limpiar */
+#clear {
+  background: #d9534f; /* Rojo */
+  color: white;
+}
+
+#clear:hover {
+  background: #c9302c;
+}
+
+.result {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+#time-result {
+  font-size: 2rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.time-info {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#current-time,
+#arrival-time {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.watermark {
+  position: fixed;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  padding: 0 20px;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.8rem;
+  pointer-events: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.watermark span {
+  font-family: monospace;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .calculator {
+    padding: 1.5rem;
+    width: 95%;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  input {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  button {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  #time-result {
+    font-size: 1.5rem;
+  }
+
+  .time-info p {
+    font-size: 1rem;
+  }
+}
