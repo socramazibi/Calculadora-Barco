@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const formattedDate = now.toLocaleDateString('es-ES', {
       day: '2-digit',
       month: '2-digit',
-      year: 'numeric'
+      year: '2-digit'
     });
 
     const formattedTime = now.toLocaleTimeString('es-ES', {
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const arrivalDate = arrivalTime.toLocaleDateString('es-ES', {
       day: '2-digit',
       month: '2-digit',
-      year: 'numeric'
+      year: '2-digit'
     });
 
     const arrivalFormattedTime = arrivalTime.toLocaleTimeString('es-ES', {
