@@ -7,9 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const currentTimeDisplay = document.getElementById('current-time');
   const arrivalTimeDisplay = document.getElementById('arrival-time');
   const historyList = document.getElementById('history-list');
+  const clearHistoryButton = document.getElementById('clear-history');
 
-  let travelHistory = []; // almacenará los 2 últimos viajes
+  let travelHistory = [];
 
+  /* ---------- Funciones de tiempo ---------- */
   function updateCurrentTime() {
     const now = new Date();
     const formattedDate = now.toLocaleDateString('es-ES', {
@@ -17,19 +19,17 @@ document.addEventListener('DOMContentLoaded', () => {
       month: '2-digit',
       year: '2-digit'
     });
-
     const formattedTime = now.toLocaleTimeString('es-ES', {
       hour: '2-digit',
       minute: '2-digit',
       second: '2-digit'
     });
-
     currentTimeDisplay.textContent = `${formattedDate} ${formattedTime}`;
   }
-
   updateCurrentTime();
   setInterval(updateCurrentTime, 1000);
 
+  /* ---------- Historial ---------- */
   function renderHistory() {
     historyList.innerHTML = '';
     if (travelHistory.length === 0) {
@@ -43,13 +43,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function updateHistory(distance, speed, timeText, arrivalText) {
-    const record = `Distancia: ${distance} MN, Velocidad: ${speed} nudos → Tiempo: ${timeText}, Llegada: ${arrivalText}`;
-    travelHistory.unshift(record);
-    travelHistory = travelHistory.slice(0, 2); // mantener solo 2 registros
+  function saveHistory() {
+    localStorage.setItem('nauticalHistory', JSON.stringify(travelHistory));
+  }
+
+  function loadHistory() {
+    const stored = localStorage.getItem('nauticalHistory');
+    if (stored) {
+      travelHistory = JSON.parse(stored);
+    }
     renderHistory();
   }
 
+  function updateHistory(distance, speed, timeText, arrivalText) {
+    const record = `Distancia: ${distance} MN\n` +
+                   `Velocidad: ${speed} nudos\n` +
+                   `Tiempo: ${timeText}\n` +
+                   `Llegada: ${arrivalText}`;
+    travelHistory.unshift(record);
+    travelHistory = travelHistory.slice(0, 2); // solo 2 últimos
+    renderHistory();
+    saveHistory();
+  }
+
+  /* ---------- Cálculo ---------- */
   function calculateTime() {
     const distance = parseFloat(distanceInput.value);
     const speed = parseFloat(speedInput.value);
@@ -75,7 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
       month: '2-digit',
       year: '2-digit'
     });
-
     const arrivalFormattedTime = arrivalTime.toLocaleTimeString('es-ES', {
       hour: '2-digit',
       minute: '2-digit',
@@ -94,8 +110,16 @@ document.addEventListener('DOMContentLoaded', () => {
     arrivalTimeDisplay.textContent = '--/--/---- --:--:--';
   }
 
+  function clearHistory() {
+    travelHistory = [];
+    localStorage.removeItem('nauticalHistory');
+    renderHistory();
+  }
+
+  /* ---------- Eventos ---------- */
   calculateButton.addEventListener('click', calculateTime);
   clearButton.addEventListener('click', clearInputs);
+  clearHistoryButton.addEventListener('click', clearHistory);
 
   [distanceInput, speedInput].forEach(input => {
     input.addEventListener('keypress', (e) => {
@@ -104,4 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // Cargar historial al iniciar
+  loadHistory();
 });

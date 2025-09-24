@@ -134,6 +134,7 @@ input {
 }
 
 #history-list li {
+  white-space: pre-line; /* <-- importante para mostrar \n como saltos de línea */
   padding: 0.4rem 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -185,4 +186,24 @@ input {
   .time-info p {
     font-size: 1rem;
   }
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+#clear-history {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+#clear-history:hover {
+  color: #ff6b6b; /* Rojo de aviso */
 }
