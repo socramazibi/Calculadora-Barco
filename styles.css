@@ -114,6 +114,30 @@ input {
   font-weight: bold;
 }
 
+/* Estilos para el historial */
+.history {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.history h2 {
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+#history-list {
+  list-style: none;
+  padding: 0;
+  font-size: 0.9rem;
+}
+
+#history-list li {
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 .watermark {
   position: fixed;
   bottom: 10px;

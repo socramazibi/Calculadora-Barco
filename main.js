@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const timeResult = document.getElementById('time-result');
   const currentTimeDisplay = document.getElementById('current-time');
   const arrivalTimeDisplay = document.getElementById('arrival-time');
+  const historyList = document.getElementById('history-list');
+
+  let travelHistory = []; // almacenará los 2 últimos viajes
 
   function updateCurrentTime() {
     const now = new Date();
@@ -26,6 +29,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   updateCurrentTime();
   setInterval(updateCurrentTime, 1000);
+
+  function renderHistory() {
+    historyList.innerHTML = '';
+    if (travelHistory.length === 0) {
+      historyList.innerHTML = '<li>No hay viajes registrados</li>';
+    } else {
+      travelHistory.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        historyList.appendChild(li);
+      });
+    }
+  }
+
+  function updateHistory(distance, speed, timeText, arrivalText) {
+    const record = `Distancia: ${distance} MN, Velocidad: ${speed} nudos → Tiempo: ${timeText}, Llegada: ${arrivalText}`;
+    travelHistory.unshift(record);
+    travelHistory = travelHistory.slice(0, 2); // mantener solo 2 registros
+    renderHistory();
+  }
 
   function calculateTime() {
     const distance = parseFloat(distanceInput.value);
@@ -60,6 +83,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     arrivalTimeDisplay.textContent = `${arrivalDate} ${arrivalFormattedTime}`;
+
+    updateHistory(distance, speed, timeResult.textContent, arrivalTimeDisplay.textContent);
   }
 
   function clearInputs() {
