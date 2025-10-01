@@ -141,7 +141,7 @@ input {
 
 .watermark {
   position: fixed;
-  bottom: 10px;
+  bottom: 2px;
   left: 0;
   right: 0;
   display: flex;

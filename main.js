@@ -37,7 +37,27 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       travelHistory.forEach(item => {
         const li = document.createElement('li');
-        li.textContent = item;
+
+        // Hora de llegada fija
+        const arrivalDate = new Date(item.arrival);
+        const arrivalText = arrivalDate.toLocaleDateString('es-ES', {
+          day: '2-digit', month: '2-digit', year: '2-digit'
+        }) + ' ' + arrivalDate.toLocaleTimeString('es-ES', {
+          hour: '2-digit', minute: '2-digit', second: '2-digit'
+        });
+
+        // Contenedor para tiempo restante
+        const remainingSpan = document.createElement('span');
+        remainingSpan.classList.add('remaining-time');
+        remainingSpan.dataset.arrival = item.arrival;
+
+        li.innerHTML = `
+          <strong>Distancia:</strong> ${item.distance} MN<br>
+          <strong>Velocidad:</strong> ${item.speed} nudos<br>
+          <strong>Tiempo estimado:</strong> ${item.timeText}<br>
+          <strong>Llegada prevista:</strong> ${arrivalText}<br>
+        `;
+        li.appendChild(remainingSpan);
         historyList.appendChild(li);
       });
     }
@@ -55,16 +75,38 @@ document.addEventListener('DOMContentLoaded', () => {
     renderHistory();
   }
 
-  function updateHistory(distance, speed, timeText, arrivalText) {
-    const record = `Distancia: ${distance} MN\n` +
-                   `Velocidad: ${speed} nudos\n` +
-                   `Tiempo: ${timeText}\n` +
-                   `Llegada: ${arrivalText}`;
+  function updateHistory(distance, speed, timeText, arrivalDateObj) {
+    const record = {
+      distance,
+      speed,
+      timeText,
+      arrival: arrivalDateObj.getTime() // guardamos timestamp
+    };
     travelHistory.unshift(record);
     travelHistory = travelHistory.slice(0, 2); // solo 2 últimos
     renderHistory();
     saveHistory();
   }
+
+  // 🔄 Actualizador de tiempos restantes en tiempo real
+  function updateRemainingTimes() {
+    const now = Date.now();
+    document.querySelectorAll('.remaining-time').forEach(span => {
+      const arrival = parseInt(span.dataset.arrival);
+      const diff = Math.max(0, arrival - now);
+
+      if (diff <= 0) {
+        span.textContent = "Tiempo restante: Llegado ✅";
+      } else {
+        const hours = Math.floor(diff / 3600000);
+        const minutes = Math.floor((diff % 3600000) / 60000);
+        const seconds = Math.floor((diff % 60000) / 1000);
+
+        span.textContent = `Tiempo restante: ${hours}h ${minutes}m ${seconds}s`;
+      }
+    });
+  }
+  setInterval(updateRemainingTimes, 1000);
 
   /* ---------- Cálculo ---------- */
   function calculateTime() {
@@ -100,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     arrivalTimeDisplay.textContent = `${arrivalDate} ${arrivalFormattedTime}`;
 
-    updateHistory(distance, speed, timeResult.textContent, arrivalTimeDisplay.textContent);
+    updateHistory(distance, speed, timeResult.textContent, arrivalTime);
   }
 
   function clearInputs() {
