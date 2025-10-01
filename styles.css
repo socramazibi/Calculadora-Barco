@@ -112,6 +112,20 @@ input {
 #arrival-time {
   font-size: 1.5rem;
   font-weight: bold;
+  display: inline-block;    /* Permite que min-width y min-height funcionen */
+  text-align: center;       /* Centrado horizontal */
+  min-width: 4ch;           /* Mantiene espacio suficiente para "00:00" */
+  line-height: 1.5;         /* Espacio entre las líneas */
+  min-height: 3em;          /* Altura mínima para mantener ambas líneas */
+}
+
+/* Opcional: para el contenedor si quieres que no se mueva nada */
+.time-info {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  align-items: flex-start;   /* Mantiene alineadas las cajas aunque estén vacías */
 }
 
 /* Estilos para el historial */
