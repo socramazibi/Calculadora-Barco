@@ -53,7 +53,7 @@ README.md # Documentación del proyecto
 ---
 
 ## 👥 Créditos
-- **Idea y pruebas:** [socramazibi](https://github.com/socramazibi) (Marco González)  
+- **Pruebas:** [socramazibi](https://github.com/socramazibi)
 - **Desarrollo y sugerencias:** ChatGPT (asistencia en programación, diseño y mejoras).
 
 ---
